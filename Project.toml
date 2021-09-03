@@ -1,0 +1,4 @@
+name = "MachineGa"
+uuid = "aab9bb2c-7af0-42e1-81c5-c6d098bd96a0"
+authors = ["jbytecode <mhsatman@gmail.com>"]
+version = "0.1.0"
