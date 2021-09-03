@@ -10,5 +10,5 @@ struct MCGA
     mutationprobability::Float64
     crossoverprobability::Float64
     lowerbounds::Array{Float64,1}
-    upperbounds::Array{Float61,1}
+    upperbounds::Array{Float64,1}
 end
