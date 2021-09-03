@@ -2,14 +2,13 @@ module MachineGa
 
 include("./types.jl")
 include("./byteworks.jl")
-include("./basicoperators.jl")
+include("./rawoperators.jl")
+include("./floatoperators.jl")
+
 
 # exports 
-export floattobytes
-export floatstobytes
-export bytestofloats
-
-export nearbytemutation
-export randombytemutation
+export ByteWorks
+export RawOperators
+export FloatOperators
 
 end # module
