@@ -119,7 +119,6 @@ end
         bytes_mutated = ByteWorks.floatstobytes(floats_mutated)
 
         differences = bytes_original .- bytes_mutated .|> abs
-
         @test all(x -> x != 0, differences)
     end
 
@@ -134,9 +133,81 @@ end
         bytes_mutated = ByteWorks.floatstobytes(floats_mutated)
 
         differences = bytes_original .- bytes_mutated .|> abs
-
         @test all(x -> x != 0, differences)
     end
 end
 
 
+@testset "Byte crossover on floats" begin
+    @testset "One-point crossover" begin
+        floats = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
+        floatsnew = FloatOperators.onepointcrossover(floats, floats)
+        difference = floats .- floatsnew .|> abs
+        @test all(x -> x == 0, difference)
+    end
+
+    @testset "Uniform crossover" begin
+        floats = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
+        floatsnew = FloatOperators.uniformcrossover(floats, floats)
+        difference = floats .- floatsnew .|> abs
+        @test all(x -> x == 0, difference)
+    end
+
+    @testset "Uniform crossover enhanced" begin
+        floats1 = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
+        floats2 = floats1 * -1.0
+
+        floatsnew = FloatOperators.uniformcrossover(floats1, floats2)
+        eitherfirstorsecond =
+            map((x, a, b) -> x == a || x == b, floatsnew, floats1, floats2)
+        @test all(eitherfirstorsecond)
+    end
+end
+
+
+@testset "Genetic algorithm operators - Crossover" begin
+    @testset "One-point crossover" begin
+        c1 = Chromosome([1.0, 2.0], 0.0)
+        c2 = Chromosome([2.0, 3.0], -1.0)
+        cnew = GaOperators.onepointcrossover(c1, c2)
+        @test cnew isa Chromosome
+        @test isinf(cnew.cost)
+        @test length(cnew.genes) == length(c1.genes)
+    end
+
+    @testset "Uniform-point crossover" begin
+        c1 = Chromosome([1.0, 2.0], 0.0)
+        c2 = Chromosome([2.0, 3.0], -1.0)
+        cnew = GaOperators.uniformcrossover(c1, c2)
+        @test cnew isa Chromosome
+        @test isinf(cnew.cost)
+        @test length(cnew.genes) == length(c1.genes)
+    end
+
+    @testset "Uniform-point crossover enhanced" begin
+        c1 = Chromosome([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], 0.0)
+        c2 = Chromosome(c1.genes * -1, 100.0)
+        cnew = GaOperators.uniformcrossover(c1, c2)
+        @test cnew isa Chromosome
+        @test isinf(cnew.cost)
+        @test length(cnew.genes) == length(c1.genes)
+        @test all(map((x, a, b) -> x == a || x == b, cnew.genes, c1.genes, c2.genes))
+    end
+
+end
+
+@testset "Genetic algorithm operators - Mutation" begin
+    @testset "Random mutation" begin
+        c = Chromosome([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], 0.0)
+        cnew = GaOperators.randombytemutation(c, mutateprob = 1.0)
+        @test isinf(cnew.cost)
+        @test length(c.genes) == length(cnew.genes)
+    end
+
+    @testset "Inc Dec mutation" begin
+        c = Chromosome([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], 0.0)
+        cnew = GaOperators.nearbytemutation(c, mutateprob = 1.0)
+        @test isinf(cnew.cost)
+        @test length(c.genes) == length(cnew.genes)
+    end
+end

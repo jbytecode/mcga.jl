@@ -15,10 +15,4 @@ function bytestofloats(bytes::Array{UInt8,1})::Array{Float64,1}
     return reinterpret(Float64, bytes)
 end
 
-
-export floattobytes
-export floatstobytes
-export bytestofloats
-
-
-end
+end # end of module

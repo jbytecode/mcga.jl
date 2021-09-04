@@ -27,9 +27,11 @@ function randombytemutation(
     mutateprob::Float64 = 0.10,
 )::Array{UInt8,1}
     function singlebytemutate(byte::UInt8)::UInt8
+        newbyte = byte
         if rand() < mutateprob
-            byte = rand(0:255)
+            newbyte = rand(filter(x -> x != byte, 0:255))
         end
+        return newbyte
     end
 
     return map(singlebytemutate, bytes)
@@ -59,12 +61,6 @@ function uniformcrossover(fbytes::Array{UInt8,1}, sbytes::Array{UInt8,1})::Array
     return map(selector, fbytes, sbytes)
 end
 
-
-
-export nearbytemutation
-export randombytemutation
-export onepointcrossover
-export uniformcrossover
 
 end # End of module
 

@@ -13,7 +13,6 @@ function nearbytemutation(
     ) |> ByteWorks.bytestofloats
 end
 
-
 function randombytemutation(
     values::Array{Float64,1};
     mutateprob::Float64 = 0.10,
@@ -24,9 +23,25 @@ function randombytemutation(
     ) |> ByteWorks.bytestofloats
 end
 
-
-export nearbytemutation
-export randombytemutation
-
-
+function onepointcrossover(
+    fvals::Array{Float64,1},
+    svals::Array{Float64,1},
+)::Array{Float64,1}
+    return RawOperators.onepointcrossover(
+        ByteWorks.floatstobytes(fvals),
+        ByteWorks.floatstobytes(svals),
+    ) |> ByteWorks.bytestofloats
 end
+
+
+function uniformcrossover(
+    fvals::Array{Float64,1},
+    svals::Array{Float64,1},
+)::Array{Float64,1}
+    return RawOperators.uniformcrossover(
+        ByteWorks.floatstobytes(fvals),
+        ByteWorks.floatstobytes(svals),
+    ) |> ByteWorks.bytestofloats
+end
+
+end # end of module
