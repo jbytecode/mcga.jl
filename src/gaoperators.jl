@@ -19,5 +19,12 @@ function nearbytemutation(c::Chromosome; mutateprob::Float64 = 0.10)::Chromosome
     Chromosome(FloatOperators.nearbytemutation(c.genes, mutateprob = mutateprob), Inf64)
 end
 
+function tournamentselection(cs::Array{Chromosome,1}; tournaments::Int = 2)::Chromosome
+    csample = rand(cs, tournaments)
+    bestindex = sortperm(cs, by = x -> x.cost) |> first
+    best = cs[bestindex]
+    return Chromosome(best.genes, best.cost)
+end
+
 
 end # module

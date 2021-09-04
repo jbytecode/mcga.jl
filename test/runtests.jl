@@ -200,6 +200,7 @@ end
     @testset "Random mutation" begin
         c = Chromosome([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], 0.0)
         cnew = GaOperators.randombytemutation(c, mutateprob = 1.0)
+        @test cnew isa Chromosome
         @test isinf(cnew.cost)
         @test length(c.genes) == length(cnew.genes)
     end
@@ -207,7 +208,38 @@ end
     @testset "Inc Dec mutation" begin
         c = Chromosome([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], 0.0)
         cnew = GaOperators.nearbytemutation(c, mutateprob = 1.0)
+        @test cnew isa Chromosome
         @test isinf(cnew.cost)
         @test length(c.genes) == length(cnew.genes)
+    end
+end
+
+@testset "Genetic algorithm operators - Tournament selection" begin
+    @testset "The worst can be selected" begin
+        cs = [
+            Chromosome([], 10),
+            Chromosome([], 20),
+            Chromosome([], 30),
+            Chromosome([], 40),
+            Chromosome([], 50),
+        ]
+        c = GaOperators.tournamentselection(cs, tournaments = 2)
+        @test c isa Chromosome
+        @test c.cost in [10, 20, 30, 40, 50]
+        @test length(c.genes) == 0
+    end
+
+    @testset "The worst should not be selected" begin
+        cs = [
+            Chromosome([], 10),
+            Chromosome([], 20),
+            Chromosome([], 30),
+            Chromosome([], 40),
+            Chromosome([], 50),
+        ]
+        c = GaOperators.tournamentselection(cs, tournaments = 1000)
+        @test c isa Chromosome
+        @test c.cost in [10, 20, 30, 40]
+        @test length(c.genes) == 0
     end
 end
