@@ -26,6 +26,18 @@ using MachineGa
     end
 end
 
+@testset "Check bytes and restore if values are not valid" begin
+    bytes = map(x -> UInt8(255), 1:16)
+    newbytes = ByteWorks.checkandrestore(
+        bytes,
+        [0.0, 0.0],
+        [10.0, 10.0]
+    )
+    floats = ByteWorks.bytestofloats(newbytes)
+    @test length(newbytes) == 16
+    @test ByteWorks.validate(newbytes)
+    @test all(x -> x <= 10.0 && x >= 0, floats)
+end
 
 @testset "Floats to bytes" begin
     @testset "Single float to bytes" begin
