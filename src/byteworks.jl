@@ -15,4 +15,9 @@ function bytestofloats(bytes::Array{UInt8,1})::Array{Float64,1}
     return reinterpret(Float64, bytes)
 end
 
+function validate(bytes::Array{UInt8,1})::Bool
+    fvals = bytestofloats(bytes)
+    all(map(x -> !isnan(x), fvals))
+end
+
 end # end of module

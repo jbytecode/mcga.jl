@@ -2,6 +2,31 @@ using Test
 
 using MachineGa
 
+@testset "Validation of byte arrays" begin
+    @testset "NaN value" begin
+        # 0x255, 0x255, ..., 0x255
+        bytes = map(x -> UInt8(255), 1:8)
+        @test !ByteWorks.validate(bytes)
+    end
+
+    @testset "NaN multiple values" begin
+        # 0x255, 0x255, ..., 0x255
+        bytes = map(x -> UInt8(255), 1:32)
+        @test !ByteWorks.validate(bytes)
+    end
+
+    @testset "Valid value" begin
+        bytes = ByteWorks.floattobytes(3.14159265)
+        @test ByteWorks.validate(bytes)
+    end
+
+    @testset "Multiple valid values" begin
+        bytes = ByteWorks.floatstobytes([3.14159265, 2.71828, 1234.5])
+        @test ByteWorks.validate(bytes)
+    end
+end
+
+
 @testset "Floats to bytes" begin
     @testset "Single float to bytes" begin
         bytes = [0x1f, 0x85, 0xeb, 0x51, 0xb8, 0x1e, 0x01, 0x40]
