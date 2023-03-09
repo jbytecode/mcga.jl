@@ -1,5 +1,6 @@
 # mcga.jl
-Machine Coded Genetic Algorithms in Julia
+Machine Coded Genetic Algorithms in Julia.
+
 This is the Julia implementation of the R package `mcga`. 
 
 
