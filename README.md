@@ -10,7 +10,7 @@ To cite mcga in publications use:
 
   Mehmet Hakan Satman (2013). Machine Coded Genetic Algorithms For Real
   Parameter Optimization Problems Gazi University Journal of Science,
-  26(1), 85-95. URL http://gujs.gazi.edu.tr/article/view/1060000982
+  26(1), 85-95. URL https://dergipark.org.tr/tr/download/article-file/83541
 
 A BibTeX entry for LaTeX users is
 
@@ -23,6 +23,6 @@ A BibTeX entry for LaTeX users is
   volume = {26},
   number = {1},
   pages = {85--95},
-  url = {http://gujs.gazi.edu.tr/article/view/1060000982},
+  url = {https://dergipark.org.tr/tr/download/article-file/83541},
 }
 ```
