@@ -274,7 +274,7 @@ end
             Chromosome([], 40),
             Chromosome([], 50),
         ]
-        c = GaOperators.tournamentselection(cs, tournaments = 1000)
+        c = GaOperators.tournamentselection(cs, tournaments = 100000)
         @test c isa Chromosome
         @test c.cost in [10, 20, 30, 40]
         @test length(c.genes) == 0

@@ -22,8 +22,7 @@ end
 
 function tournamentselection(cs::Vector{Chromosome}; tournaments::Int = 2)::Chromosome
     csample = rand(cs, tournaments)
-    bestindex = sortperm(csample, by = x -> x.cost) |> first
-    best = cs[bestindex]
+    best = sort(csample, by = x -> x.cost) |> first
     return Chromosome(best.genes, best.cost)
 end
 
