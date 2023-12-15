@@ -4,9 +4,9 @@ import MachineGa.ByteWorks
 import MachineGa.RawOperators
 
 function nearbytemutation(
-    values::Array{Float64,1};
+    values::Vector{Float64};
     mutateprob::Float64 = 0.10,
-)::Array{Float64,1}
+)::Vector{Float64}
     return RawOperators.nearbytemutation(
         ByteWorks.floatstobytes(values),
         mutateprob = mutateprob,
@@ -14,9 +14,9 @@ function nearbytemutation(
 end
 
 function randombytemutation(
-    values::Array{Float64,1};
+    values::Vector{Float64};
     mutateprob::Float64 = 0.10,
-)::Array{Float64,1}
+)::Vector{Float64}
     return RawOperators.randombytemutation(
         ByteWorks.floatstobytes(values),
         mutateprob = mutateprob,
@@ -24,9 +24,9 @@ function randombytemutation(
 end
 
 function onepointcrossover(
-    fvals::Array{Float64,1},
-    svals::Array{Float64,1},
-)::Array{Float64,1}
+    fvals::Vector{Float64},
+    svals::Vector{Float64},
+)::Vector{Float64}
     return RawOperators.onepointcrossover(
         ByteWorks.floatstobytes(fvals),
         ByteWorks.floatstobytes(svals),
@@ -35,9 +35,9 @@ end
 
 
 function uniformcrossover(
-    fvals::Array{Float64,1},
-    svals::Array{Float64,1},
-)::Array{Float64,1}
+    fvals::Vector{Float64},
+    svals::Vector{Float64},
+)::Vector{Float64}
     return RawOperators.uniformcrossover(
         ByteWorks.floatstobytes(fvals),
         ByteWorks.floatstobytes(svals),

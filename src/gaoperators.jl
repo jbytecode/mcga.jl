@@ -20,18 +20,18 @@ function nearbytemutation(c::Chromosome; mutateprob::Float64 = 0.10)::Chromosome
     Chromosome(FloatOperators.nearbytemutation(c.genes, mutateprob = mutateprob), Inf64)
 end
 
-function tournamentselection(cs::Array{Chromosome,1}; tournaments::Int = 2)::Chromosome
+function tournamentselection(cs::Vector{Chromosome}; tournaments::Int = 2)::Chromosome
     csample = rand(cs, tournaments)
     bestindex = sortperm(csample, by = x -> x.cost) |> first
     best = cs[bestindex]
     return Chromosome(best.genes, best.cost)
 end
 
-function generation(mcga::MCGA, chs::Array{Chromosome, 1})::Array{Chromosome, 1}
+function generation(mcga::MCGA, chs::Vector{Chromosome})::Vector{Chromosome}
     # Calculate fitness
     chs = map(x -> Chromosome(x.genes, mcga.cost(x.genes)), chs)
 
-    newpop = Array{Chromosome, 1}(undef, mcga.popsize)
+    newpop = Vector{Chromosome}(undef, mcga.popsize)
     for i in 1:mcga.popsize
         ch1 = tournamentselection(chs)
         ch2 = tournamentselection(chs)

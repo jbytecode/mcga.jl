@@ -6,23 +6,23 @@ using MachineGa
     @testset "NaN value" begin
         # 0x255, 0x255, ..., 0x255
         bytes = map(x -> UInt8(255), 1:8)
-        @test !ByteWorks.validate(bytes)
+        @test !ByteWorks.isvalid(bytes)
     end
 
     @testset "NaN multiple values" begin
         # 0x255, 0x255, ..., 0x255
         bytes = map(x -> UInt8(255), 1:32)
-        @test !ByteWorks.validate(bytes)
+        @test !ByteWorks.isvalid(bytes)
     end
 
     @testset "Valid value" begin
         bytes = ByteWorks.floattobytes(3.14159265)
-        @test ByteWorks.validate(bytes)
+        @test ByteWorks.isvalid(bytes)
     end
 
     @testset "Multiple valid values" begin
         bytes = ByteWorks.floatstobytes([3.14159265, 2.71828, 1234.5])
-        @test ByteWorks.validate(bytes)
+        @test ByteWorks.isvalid(bytes)
     end
 end
 
@@ -35,7 +35,7 @@ end
     )
     floats = ByteWorks.bytestofloats(newbytes)
     @test length(newbytes) == 16
-    @test ByteWorks.validate(newbytes)
+    @test ByteWorks.isvalid(newbytes)
     @test all(x -> x <= 10.0 && x >= 0, floats)
 end
 

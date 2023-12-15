@@ -1,6 +1,6 @@
 module RawOperators
 
-function nearbytemutation(bytes::Array{UInt8,1}; mutateprob::Float64 = 0.10)::Array{UInt8,1}
+function nearbytemutation(bytes::Vector{UInt8}; mutateprob::Float64 = 0.10)::Vector{UInt8}
     function singlebytemutate(byte::UInt8)::UInt8
         if rand() < mutateprob
             if rand() < 0.5
@@ -23,9 +23,9 @@ end
 
 
 function randombytemutation(
-    bytes::Array{UInt8,1};
+    bytes::Vector{UInt8};
     mutateprob::Float64 = 0.10,
-)::Array{UInt8,1}
+)::Vector{UInt8}
     function singlebytemutate(byte::UInt8)::UInt8
         newbyte = byte
         if rand() < mutateprob
@@ -38,7 +38,7 @@ function randombytemutation(
 end
 
 
-function onepointcrossover(fbytes::Array{UInt8,1}, sbytes::Array{UInt8,1})::Array{UInt8,1}
+function onepointcrossover(fbytes::Vector{UInt8}, sbytes::Vector{UInt8})::Vector{UInt8}
     len = length(fbytes)
     @assert len == length(sbytes)
     @assert len > 1
@@ -46,7 +46,7 @@ function onepointcrossover(fbytes::Array{UInt8,1}, sbytes::Array{UInt8,1})::Arra
     return vcat(fbytes[1:cutpoint], sbytes[(cutpoint+1):len])
 end
 
-function uniformcrossover(fbytes::Array{UInt8,1}, sbytes::Array{UInt8,1})::Array{UInt8,1}
+function uniformcrossover(fbytes::Vector{UInt8}, sbytes::Vector{UInt8})::Vector{UInt8}
     len = length(fbytes)
     @assert len == length(sbytes)
     @assert len > 1

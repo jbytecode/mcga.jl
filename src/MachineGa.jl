@@ -1,7 +1,7 @@
 module MachineGa
 
 struct Chromosome
-    genes::Array{Float64,1}
+    genes::Vector{Float64}
     cost::Float64
 end
 
@@ -11,8 +11,8 @@ struct MCGA
     costfunction::Function
     mutationprobability::Float64
     crossoverprobability::Float64
-    lowerbounds::Array{Float64,1}
-    upperbounds::Array{Float64,1}
+    lowerbounds::Vector{Float64}
+    upperbounds::Vector{Float64}
 end
 
 include("./byteworks.jl")
